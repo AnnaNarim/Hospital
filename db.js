@@ -102,7 +102,7 @@ Database.addDoc = (text) => {
   const room= text.room;
 
   return new Promise((resolve, reject) => {
-    client.query(`insert into listoftodos
+    client.query(`insert into doctor
       (first_name, last_name, salary, birth, dep_id, address, room)
       values('${fn}', '${ln}', '${salary}', '${birth}', '${dep_id}', '${address}', '${room}')`,
       (err, res) => {

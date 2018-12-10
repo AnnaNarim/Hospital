@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hospital</title>
+  </head>
+<body>
+	    <center>HOSPITAL</center>
+<fieldset>
+  <p>Choose field to add:</p>
+  <form action="" method="post">
+  <input type = "radio"
+    id = "chkDoctors"
+    value = "doctors" checked>Doctors
+  <input type = "radio"
+    id = "chkNurses"
+    value = "nurses">Nurses
+  <input type = "radio"
+    id = "chkDepts"
+    value = "departments">Departments
+  <input type = "radio"
+    id = "chkPatients"
+    value = "patients">Patients 
+    <p></p>
+  <nav>
+  <a href="adding.html">next</a> 
+  </nav>
+  </fieldset>
+  </form>
+  <p></p>
+  <nav>
+  <a href="treatment.html">Treatment</a> 
+  </nav>
+  <p></p>
+<fieldset>
+
+  	<table rules="all">
+  	<th>
+  	<div style="float: left; margin-right: 50px">
+  	<p>Doctors</p>
+  	<input type="text" placeholder="Search by ID" name="search">
+    <button type="submit" id="idDoc" onclick="optionsDoc()">Go!<i class="fa fa-search"></i></button>
+    <button type = "button" id="idAllDoc"
+    onclick = "searchDoc()">
+    All
+    </button>
+    </div>
+	</th>
+
+	<th>
+    <div style="float: left; margin-right: 50px">
+  	<p>Nurses</p>
+  	<input type="text" placeholder="Search by ID" name="search">
+    <button type="submit" id="idnur" onclick="optionsNur()">Go!<i class="fa fa-search"></i></button>
+    <button type = "button" id="idAllNur"
+    onclick = "searchNur();">
+    All
+    </button>
+	</div>
+	</th>
+
+	<th>
+	<div style="float: left; margin-right: 50px">
+  	<p>Patients</p>
+  	<input type="text" placeholder="Search by ID" name="search">
+    <button type="submit" id=idPat onclick="optionsPat()">Go!<i class="fa fa-search"></i></button>
+    <button type = "button" id=idAllPat
+    onclick = "searchPat();">
+    All
+    </button>
+	</div>
+	</th>
+
+	<th>
+	<div style="float: left; margin-right: 50px">
+  	<p>Department</p>
+  	<input type="text" placeholder="Search by ID" name="search">
+    <button type="submit" id=idDept onclick="optionsDept()">Go!<i class="fa fa-search"></i></button>
+    <button type = "button" id=idAllDept
+    onclick = "searchDept();">
+    All
+    </button>
+  	</div>
+    </th>
+	</table>
+  </fieldset>
+  <script type="text/javascript">
+
+  	 
+  </script>
+</body>
+</html>

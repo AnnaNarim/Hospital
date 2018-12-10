@@ -3,7 +3,12 @@ const db = require('../db.js');
 const hospital = {};
 module.exports = hospital;
 
-hospital.renderPage = (request, h) => h.file('./form.html');
+hospital.renderPage = (request, h) => h.file('./index.html');
+
+hospital.renderPageAdd = (request, h) => h.file('./adding.html');
+
+hospital.renderPageTreat = (request, h) => h.file('./treatment.html');
+
 
 ////////////////////////////////// doctors
 
@@ -51,12 +56,12 @@ hospital.getAllTreatByPat =(request) => {
 
 ////////////////////////////////
 
-todo.update = (request) => {
-  const { id, value } = request.payload;
-  return db.update(id, value);
-};
+// todo.update = (request) => {
+//   const { id, value } = request.payload;
+//   return db.update(id, value);
+// };
 
-todo.delete = (request) => {
-  const { id } = request.payload;
-  return db.delete(id);
-};
+// todo.delete = (request) => {
+//   const { id } = request.payload;
+//   return db.delete(id);
+// };

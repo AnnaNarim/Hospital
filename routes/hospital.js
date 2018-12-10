@@ -13,6 +13,26 @@ routes.push({
   },
 });
 
+routes.push({
+  method: 'GET',
+  path: '/adding',
+  handler: Handlers.renderPageAdd,
+  config: {
+    tags: ['api'],
+    description: 'Page to render form.html',
+  },
+});
+
+routes.push({
+  method: 'GET',
+  path: '/treatment',
+  handler: Handlers.renderPageTreat,
+  config: {
+    tags: ['api'],
+    description: 'Page to render form.html',
+  },
+});
+
 //////////////////////////////////////// doctors
 routes.push({
   method: 'GET',

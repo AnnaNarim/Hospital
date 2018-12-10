@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Treatments</title>
+  </head>
+<body>
+   <center>Treatments</center>
+   <p>Search by:</p>
+   <input type = "checkbox"
+     id = "chkDoctors"
+     value = "doctors" />
+     <label for = "chkDoctors">Doctors</label>
+     <input type="text" placeholder="Search by Doctor ID" name="search" id="DocInput">
+
+     <p></p>
+
+   <input type = "checkbox"
+     id = "chkPatients"
+     value = "patients" />
+     <label for = "chkPatients">Patients</label>
+     <input type="text" placeholder="Search by Patient ID" name="search" id="PatInput">
+     <p></p>
+     <button type="submit" id="searchTreat" onclick="chooseTreat">Go!</button>
+
+  <p></p>
+
+  <nav>
+  <a href="index.html">Back to Main Page</a> 
+  </nav>
+
+  <script type="text/javascript">
+    const API_URL = 'http://localhost:3000/api/';
+
+    const chooseTreat = () => {
+      
+const chDoc = document.getElementById('chkDoctors').value;
+      const chPat = document.getElementById('chkPatients').value;
+        const idDoc = document.getElementById('DocInput').value;
+      const idPat = document.getElementById('PatInput').value;
+
+      if(chDoc && !chPat) {
+          fetch(API_URL+'treatments/doctor'+idDoc)
+          .then((response)=> response.json())
+          .then(data => {
+            root.innerHTML += makeListTreat(data);    // ????????
+          })
+       }
+
+       else if(!chDoc && chPat) {
+          fetch(API_URL+'treatments/patient'+idPat)
+          .then((response)=> response.json())
+          .then(data => {
+            root.innerHTML += makeListTreat(data);    // ????????
+          })
+       }
+
+       else if(chDoc && chPat) {
+          fetch(API_URL+'treatments/'+idPat+'/'+idDoc)
+          .then((response)=> response.json())
+          .then(data => {
+            root.innerHTML += makeListTreat(data);    // ????????
+          })
+       }
+
+      }
+  </script>
+
+</body>
+</html>

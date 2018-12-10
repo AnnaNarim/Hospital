@@ -3,89 +3,174 @@
   <head>
     <title>Hospital</title>
   </head>
-<body>
-	    <center>HOSPITAL</center>
-<fieldset>
-  <p>Choose field to add:</p>
-  <form action="" method="post">
-  <input type = "radio"
-    id = "chkDoctors"
-    value = "doctors" checked>Doctors
-  <input type = "radio"
-    id = "chkNurses"
-    value = "nurses">Nurses
-  <input type = "radio"
-    id = "chkDepts"
-    value = "departments">Departments
-  <input type = "radio"
-    id = "chkPatients"
-    value = "patients">Patients 
-    <p></p>
-  <nav>
-  <a href="adding.html">next</a> 
-  </nav>
-  </fieldset>
-  </form>
-  <p></p>
-  <nav>
-  <a href="treatment.html">Treatment</a> 
-  </nav>
-  <p></p>
-<fieldset>
+  <body>
+    <center>HOSPITAL</center>
+    <fieldset>
+      <p>Choose field to add:</p>
+      <form action="" method="post">
+      <input type = "radio"
+        id = "chkDoctors"
+        value = "doctors" checked>Doctors
+      <input type = "radio"
+        id = "chkNurses"
+        value = "nurses">Nurses
+      <input type = "radio"
+        id = "chkDepts"
+        value = "departments">Departments
+      <input type = "radio"
+        id = "chkPatients"
+        value = "patients">Patients 
+        <p></p>
+      <nav>
+      <a href="adding">next</a> 
+      </nav>
+      </fieldset>
+      </form>
 
-  	<table rules="all">
-  	<th>
-  	<div style="float: left; margin-right: 50px">
-  	<p>Doctors</p>
-  	<input type="text" placeholder="Search by ID" name="search">
-    <button type="submit" id="idDoc" onclick="optionsDoc()">Go!<i class="fa fa-search"></i></button>
-    <button type = "button" id="idAllDoc"
-    onclick = "searchDoc()">
-    All
-    </button>
-    </div>
-	</th>
+      <p></p>
+      <nav>
+      <a href="treatment">Treatment</a> 
+      </nav>
+      <p></p>
+    <fieldset>
+      <table rules="all">
+        <th>
+          <div style="float: left; margin-right: 10px">
+            <p>Doctors</p>
+            <input type="text" placeholder="Search by ID" name="search" id="DocInput">
+            <button type="submit" id="idDoc" onclick="chooseDoc()">Go!</button>
+            <button type = "button" id="deleteDoc"
+            onclick = "deleteDoc()">
+            Delete
+            </button>
+            <button type = "button" id="idAllDoc"
+            onclick = "chooseAllDocs()">
+            All
+            </button>
+          </div>
+        </th>
+        <th>
+          <div style="float: left; margin-right: 10px">
+            <p>Nurses</p>
+            <input type="text" placeholder="Search by ID" name="search">
+            <button type="submit" id="idnur" onclick="chooseNur()">Go!</button>
+            <button type = "button" id="deleteNur"
+            onclick = "deleteNur()">
+            Delete
+            </button>
+            <button type = "button" id="idAllNur"
+              onclick = "searchNur()">
+              All
+            </button>
+          </div>
+        </th>
 
-	<th>
-    <div style="float: left; margin-right: 50px">
-  	<p>Nurses</p>
-  	<input type="text" placeholder="Search by ID" name="search">
-    <button type="submit" id="idnur" onclick="optionsNur()">Go!<i class="fa fa-search"></i></button>
-    <button type = "button" id="idAllNur"
-    onclick = "searchNur();">
-    All
-    </button>
-	</div>
-	</th>
+        <th>
+          <div style="float: left; margin-right: 10px">
+            <p>Patients</p>
+            <input type="text" placeholder="Search by ID" name="search">
+            <button type="submit" id=idPat onclick="choosePat()">Go!<i class="fa fa-search"></i></button>
+            <button type = "button" id="deletePat"
+            onclick = "deletePat()">
+            Delete
+            </button>
+            <button type = "button" id=idAllPat
+            onclick = "searchPat()">
+            All
+            </button>
+          </div>
+        </th>
 
-	<th>
-	<div style="float: left; margin-right: 50px">
-  	<p>Patients</p>
-  	<input type="text" placeholder="Search by ID" name="search">
-    <button type="submit" id=idPat onclick="optionsPat()">Go!<i class="fa fa-search"></i></button>
-    <button type = "button" id=idAllPat
-    onclick = "searchPat();">
-    All
-    </button>
-	</div>
-	</th>
+        <th>
+          <div style="float: left; margin-right: 10px">
+            <p>Department</p>
+            <input type="text" placeholder="Search by ID" name="search">
+            <button type="submit" id=idDept onclick="chooseDept()">Go!</button>
+            <button type = "button" id="deleteDept"
+            onclick = "deleteDept()">
+            Delete
+            </button>
+            <button type = "button" id=idAllDept
+            onclick = "chooseAllDept()">
+            All
+            </button>
+          </div>
+        </th>
+      </table>
+    </fieldset>
+      <script type="text/javascript">
+          const API_URL = 'http://localhost:3000/api/';
 
-	<th>
-	<div style="float: left; margin-right: 50px">
-  	<p>Department</p>
-  	<input type="text" placeholder="Search by ID" name="search">
-    <button type="submit" id=idDept onclick="optionsDept()">Go!<i class="fa fa-search"></i></button>
-    <button type = "button" id=idAllDept
-    onclick = "searchDept();">
-    All
-    </button>
-  	</div>
-    </th>
-	</table>
-  </fieldset>
-  <script type="text/javascript">
+          const deleteDoc = () =>{
+          const id = document.getElementById('DocInput').value;
 
-  	 
-  </script>
-</body>
+          fetch(API_URL+'doctors/'+id,{
+              method: 'DELETE',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ id:id }),
+            })
+            .then(getdata());  // ????????????
+        }
+        // getdata();
+
+          const chooseDoc = () => {
+          const DocInput = document.getElementById('DocInput').value;
+
+          fetch(API_URL+'doctors/'+DocInput)
+          .then((response)=> response.json())
+          .then(data => {
+            root.innerHTML += makeListDoctors(data); // ???????????????????
+          })
+        }
+
+         const makeListDoctors = (data) => {
+         const DocInput = document.getElementById('DocInput').value;
+         if(data){
+            return `
+              <div>
+                  // ????????????????????
+              </div>
+            `
+          }
+        }
+
+          const chooseAllDocs = () => {
+            fetch(API_URL+'doctors')
+            .then((response)=> response.json())
+            .then(data => {
+              root.innerHTML += makeListDoctors(data);
+              getCount();
+              maxSalary();
+
+            })
+        }
+        const getCount = () => {
+          fetch(API_URL+'doctors/count')
+            .then((response)=> response.json())
+            .then(data => {
+              root.innerHTML += makeListDoctors(data);//???????????
+
+            })
+        }
+
+        const maxSalary = () => {
+          fetch(API_URL+'doctors/max')
+            .then((response)=> response.json())
+            .then(data => {
+              root.innerHTML += makeListDoctors(data);//???????????
+
+            })
+        }
+
+        const chooseAllDept = () => {
+          fetch(API_URL+'departments')
+          .then((response)=> response.json())
+          .then(data => {
+            root.innerHTML += makeListDepartments(data);  // ???????????????
+          })
+        }
+    </script>
+  </body>
 </html>

@@ -62,3 +62,14 @@ address text
 );
 
 
+insert into nurse(first_name, last_name, salary, birth, dep_id, address, room)
+values('Vladimir', 'Putin', 100000, '02/05/1987', 4, 'Yerevan, Wonderland 7/8', 118); 
+
+
+insert into treatment(doct_id, pat_id, tr_date, notes)
+values(4, 1, '10/02/2017', 'Everything is ok'); 
+
+insert into nurse_phone(id, phone)
+values(1, '090090909');
+
+

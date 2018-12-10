@@ -1,0 +1,64 @@
+CREATE TABLE department(
+dep_id SERIAL PRIMARY KEY,
+name  VARCHAR(50) NOT NULL,
+budget real not null
+);
+
+create table head_doctors(
+doct_id integer REFERENCES doctor(doct_id),
+dep_id integer REFERENCES department(dep_id),
+PRIMARY KEY (doct_id, dep_id)
+);
+
+CREATE TABLE doctor(
+doct_id SERIAL PRIMARY KEY,
+first_name  VARCHAR(20) NOT NULL,
+last_name  VARCHAR(50) NOT NULL,
+salary real not null,
+birth date,
+dep_id integer REFERENCES department(dep_id),
+address text,
+room integer
+);
+
+CREATE TABLE doct_phone(
+id integer references doctor(doct_id),
+phone text,
+PRIMARY KEY (id, phone)
+);
+
+CREATE TABLE nurse_phone(
+id integer references nurse(nurse_id),
+phone text,
+PRIMARY KEY (id, phone)
+);
+
+CREATE TABLE nurse(
+nurse_id SERIAL PRIMARY KEY,
+first_name  VARCHAR(20) NOT NULL,
+last_name  VARCHAR(50) NOT NULL,
+salary real not null,
+birth date,
+dep_id integer REFERENCES department(dep_id),
+address text,
+room integer
+);
+
+CREATE TABLE treatment(
+doct_id integer REFERENCES doctor(doct_id),
+pat_id integer REFERENCES patient(pat_id),
+tr_date date,
+PRIMARY KEY (doct_id, pat_id, tr_date),
+notes text,
+nurse_id integer REFERENCES nurse(nurse_id)
+);
+
+CREATE TABLE patient(
+pat_id SERIAL PRIMARY KEY,
+first_name  VARCHAR(20) NOT NULL,
+last_name  VARCHAR(50) NOT NULL,
+birth date,
+address text
+);
+
+

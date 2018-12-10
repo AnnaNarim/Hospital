@@ -39,16 +39,15 @@
             <p>Doctors</p>
             <input type="text" placeholder="Search by ID" name="search" id="DocInput">
             <button type="submit" id="idDoc" onclick="chooseDoc()">Go!</button>
-            <button type = "button" id="deleteDoc"
-            onclick = "deleteDoc()">
-            Delete
+            <button type = "button" id="deleteDoc" onclick = "deleteDoc()">
+              Delete
             </button>
-            <button type = "button" id="idAllDoc"
-            onclick = "chooseAllDocs()">
-            All
+            <button type = "button" id="idAllDoc" onclick = "chooseAllDocs()">
+              All
             </button>
           </div>
         </th>
+
         <th>
           <div style="float: left; margin-right: 10px">
             <p>Nurses</p>
@@ -96,62 +95,138 @@
             </button>
           </div>
         </th>
+
+        <tr>
+          <td>
+            <div id='countMax'></div>
+            <div id='rootDoc'></div>
+          </td>
+          <td>
+            <div id='rootNurse'></div>
+          </td>
+          <td>
+            <div id='rootPat'></div>
+          </td>
+          <td>
+            <div id='rootDep'></div>
+          </td>
+        </tr>
+
       </table>
     </fieldset>
-      <script type="text/javascript">
-          const API_URL = 'http://localhost:3000/api/';
 
-          const deleteDoc = () =>{
+      <script type="text/javascript">
+        const API_URL = 'http://localhost:3000/api/';
+
+        const deleteDoc = () => {
           const id = document.getElementById('DocInput').value;
 
-          fetch(API_URL+'doctors/'+id,{
-              method: 'DELETE',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ id:id }),
+          fetch(API_URL+'doctors/'+id, {
+              method: 'DELETE'
             })
-            .then(getdata());  // ????????????
+            .then((response)=> response.json())
+            .then(() => {
+              alert('Doctor deleted!');
+              document.getElementById('DocInput').value = '';
+              document.getElementById('rootDoc').value = '';
+              document.getElementById('countMax').value = '';
+            })
+            .catch(console.error);
         }
-        // getdata();
 
-          const chooseDoc = () => {
-          const DocInput = document.getElementById('DocInput').value;
+        const chooseDoc = () => {
+          const docInput = document.getElementById('DocInput').value;
 
-          fetch(API_URL+'doctors/'+DocInput)
+          fetch(API_URL+'doctors/' + docInput)
           .then((response)=> response.json())
           .then(data => {
-            root.innerHTML += makeListDoctors(data); // ???????????????????
+            const rootDoc = document.getElementById('rootDoc');
+            rootDoc.innerHTML = docInputs(data);
           })
         }
 
-         const makeListDoctors = (data) => {
-         const DocInput = document.getElementById('DocInput').value;
-         if(data){
+        const docInputs = (data) => {
+          if(data) {
             return `
-              <div>
-                  // ????????????????????
-              </div>
-            `
+
+              ID: <br>
+              <input type='number' id='doc_id' value=${data[0].doct_id} disabled>
+              <p><p>
+
+              First name:<br>
+              <input type="text" id="firstname" value=${data[0].first_name}>
+              <p></p>
+
+              Last name:<br>
+              <input type="text" id="lastname" value=${data[0].last_name}>
+              <p></p>
+
+              Salary:<br>
+              <input type="number" id="salary" value=${data[0].salary}>
+              <p></p>
+
+              Birth Date:<br>
+              <input type="text" id="birthDate" value=${data[0].birth}>
+              <p></p>
+
+              Address:<br>
+              <input type="text" id="address" value=${data[0].address}>
+              <p></p>
+
+              Department ID:<br>
+              <input type="number" id="deptID" value=${data[0].dep_id}>
+              <p></p>
+               
+              Room:<br>
+              <input type="number" id="room" value=${data[0].room}>
+              <p></p>
+
+              <button type = "button"
+                onclick = "update()">
+               Update
+              </button>
+            `          
           }
         }
 
-          const chooseAllDocs = () => {
-            fetch(API_URL+'doctors')
-            .then((response)=> response.json())
-            .then(data => {
-              root.innerHTML += makeListDoctors(data);
-              getCount();
-              maxSalary();
+        const chooseAllDocs = () => {
+          fetch(API_URL+'doctors')
+          .then((response)=> response.json())
+          .then(data => {
+            const rootDoc = document.getElementById('rootDoc');
+            rootDoc.innerHTML = makeListDoctors(data);
+            getCount();
+            maxSalary();
+          })
+        }
 
-            })
+        const makeListDoctors = (data) => {
+          if(data) {
+            return `
+              <ul>
+                ${data.map((item) =>
+                  `<li>
+                    ${item.doct_id}
+                    <br>
+                    ${item.first_name} ${item.last_name}
+                    <br>
+                    ${item.birth} ${item.address}
+                    <br>
+                    ${item.dep_id} ${item.room} ${item.salary} 
+                  </li>
+                  `
+                ).join('')
+              }
+              </ul>
+            `
+          }
         }
         const getCount = () => {
           fetch(API_URL+'doctors/count')
             .then((response)=> response.json())
             .then(data => {
-              root.innerHTML += makeListDoctors(data);//???????????
-
+              const countMax = document.getElementById('countMax');
+              countMax.innerHTML = "Count is " + data[0].count;
             })
         }
 
@@ -159,8 +234,8 @@
           fetch(API_URL+'doctors/max')
             .then((response)=> response.json())
             .then(data => {
-              root.innerHTML += makeListDoctors(data);//???????????
-
+              const countMax = document.getElementById('countMax');
+              countMax.innerHTML += "<br>Max Salary is " + data[0].max;
             })
         }
 
@@ -168,8 +243,35 @@
           fetch(API_URL+'departments')
           .then((response)=> response.json())
           .then(data => {
-            root.innerHTML += makeListDepartments(data);  // ???????????????
+            const rootDep = document.getElementById('rootDep');
+            rootDep.innerHTML = makeListDep(data);
           })
+        }
+
+        const makeListDep = (data) => {
+          if(data) {
+            return `
+              <ul>
+                ${data.map((item) =>
+                  `<li>
+                    Dept_Id: ${item.dep_id}
+                    <br>
+                    Department Name: ${item.name}
+                    <br>
+                    Budget: ${item.budget}
+                    <br>
+                    Head Doctor ID: ${item.doct_id}
+                    <br>
+                    Head Doctor Name: ${item.first_name} ${item.last_name}
+                    <br>
+                    Room and Salary: ${item.room} ${item.salary} 
+                  </li>
+                  `
+                ).join('')
+              }
+              </ul>
+            `
+          }
         }
     </script>
   </body>

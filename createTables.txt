@@ -73,3 +73,7 @@ insert into nurse_phone(id, phone)
 values(1, '090090909');
 
 
+create index doctor_index on doctor(doct_id);
+also for nurses and patients
+
+

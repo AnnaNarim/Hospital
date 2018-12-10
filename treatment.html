@@ -20,48 +20,150 @@
      <label for = "chkPatients">Patients</label>
      <input type="text" placeholder="Search by Patient ID" name="search" id="PatInput">
      <p></p>
-     <button type="submit" id="searchTreat" onclick="chooseTreat">Go!</button>
+     <button type="submit" id="searchTreat" onclick="chooseTreat()">Go!</button>
 
   <p></p>
 
   <nav>
-  <a href="index.html">Back to Main Page</a> 
+  <a href="/">Back to Main Page</a> 
   </nav>
+
+  <div id="root"></div>
 
   <script type="text/javascript">
     const API_URL = 'http://localhost:3000/api/';
 
     const chooseTreat = () => {
       
-const chDoc = document.getElementById('chkDoctors').value;
-      const chPat = document.getElementById('chkPatients').value;
-        const idDoc = document.getElementById('DocInput').value;
+      const chDoc = document.getElementById('chkDoctors').checked;
+      const chPat = document.getElementById('chkPatients').checked;
+      const idDoc = document.getElementById('DocInput').value;
       const idPat = document.getElementById('PatInput').value;
+      const root = document.getElementById('root');
 
       if(chDoc && !chPat) {
-          fetch(API_URL+'treatments/doctor'+idDoc)
-          .then((response)=> response.json())
-          .then(data => {
-            root.innerHTML += makeListTreat(data);    // ????????
-          })
+        return fetch(API_URL+'treatments/doctor/'+idDoc)
+                .then((response)=> response.json())
+                .then(data => {
+                  root.innerHTML = makeListTreatDoc(data.rows);    
+                })
        }
 
        else if(!chDoc && chPat) {
-          fetch(API_URL+'treatments/patient'+idPat)
-          .then((response)=> response.json())
-          .then(data => {
-            root.innerHTML += makeListTreat(data);    // ????????
-          })
+          return fetch(API_URL+'treatments/patient/'+idPat)
+                .then((response)=> response.json())
+                .then(data => {
+                  root.innerHTML = makeListTreatPat(data.rows);
+                })
        }
 
        else if(chDoc && chPat) {
-          fetch(API_URL+'treatments/'+idPat+'/'+idDoc)
-          .then((response)=> response.json())
-          .then(data => {
-            root.innerHTML += makeListTreat(data);    // ????????
-          })
+          return fetch(API_URL+'treatments/'+idPat+'/'+idDoc)
+                .then((response)=> response.json())
+                .then(data => {
+                                    console.log('---dataan both', data.rows)
+
+                  root.innerHTML = makeListTreat(data.rows);    // ????????
+                })
        }
 
+      }
+/// ??? nuyn anunov columneri hamar inch piti arvni
+// eta mnacel u update
+      const makeListTreat = (data) => {
+         if(data) {
+          return `
+            <ul>
+                ${data.map((item) =>
+                  `<li>
+                    Doctor ID: ${item.doct_id}
+                    <br>
+                    Patient ID: ${item.pat_id}
+                    <br>
+                    Date: ${item.tr_date}
+                    <br>
+                    Notes: ${item.notes}
+                    <br> 
+                    Nurse: ${item.nurse_id}
+                    <br>
+                    Doctor Name: ${item.first_name} ${item.last_name}
+                    <br>
+                    Dep ID: ${item.dep_id}
+                    <br> 
+                    Room: ${item.room}
+                    <br>
+                    Address: ${item.address}
+                    <br>
+                    Patient Name: ${item.first_name} ${item.last_name}
+                    <br>
+                    birth: ${item.birth}
+                  </li>
+                  `
+                ).join('')
+              }
+            </ul>
+          `
+        }
+      }
+
+      const makeListTreatDoc = (data) => {
+        if(data) {
+          return `
+            <ul>
+                ${data.map((item) =>
+                  `<li>
+                    Doctor ID: ${item.doct_id}
+                    <br>
+                    Patient ID: ${item.pat_id}
+                    <br>
+                    Date: ${item.tr_date}
+                    <br>
+                    Notes: ${item.notes}
+                    <br> 
+                    Nurse: ${item.nurse_id}
+                    <br>
+                    Doctor Name: ${item.first_name} ${item.last_name}
+                    <br>
+                    Dep ID: ${item.dep_id}
+                    <br> 
+                    Room: ${item.room}
+                    <br>
+                    Address: ${item.address}
+                  </li>
+                  `
+                ).join('')
+              }
+            </ul>
+          `
+        }
+      }
+
+      const makeListTreatPat = (data) => {
+        if(data) {
+          return `
+            <ul>
+                ${data.map((item) =>
+                  `<li>
+                    Doctor ID: ${item.doct_id}
+                    <br>
+                    Patient ID: ${item.pat_id}
+                    <br>
+                    Date: ${item.tr_date}
+                    <br>
+                    Notes: ${item.notes}
+                    <br> 
+                    Nurse: ${item.nurse_id}
+                    <br>
+                    Patient Name: ${item.first_name} ${item.last_name}
+                    <br>
+                    birth: ${item.birth}
+                  </li>
+                  `
+                ).join('')
+              }
+            </ul>
+          `
+        }
       }
   </script>
 

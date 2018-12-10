@@ -1,28 +1,62 @@
 const db = require('../db.js');
-const todo = {};
-module.exports = todo;
 
-const arrayOfTodo = [];
+const hospital = {};
+module.exports = hospital;
 
-todo.renderPage = (request, h) => h.file('./form.html');
+hospital.renderPage = (request, h) => h.file('./form.html');
 
-todo.add = (request) => {
+////////////////////////////////// doctors
+
+hospital.getAllDocs = () => db.getAllDocs();
+
+hospital.getAllDocsCount = () => db.getAllDocsCount();
+
+hospital.getMaxSalary = () => db.getMaxSalary();
+
+hospital.getDoctor = (request) => {
+  const { id } = request.payload;
+  return db.getDoctor(id);
+}
+
+hospital.addDoctor = (request) => {
   const { text } = request.payload;
-  arrayOfTodo.push(text);
-  return arrayOfTodo;
+  return db.addDoc(text);
 };
 
-todo.getTodos = () => arrayOfTodo;
+hospital.deleteDoctor = (request) => {
+  const { id } = request.payload;
+  return db.deleteDoc(id);
+}
+
+///////////////////////////////// departments
+
+hospital.getAllDepart = () => db.getAllDepart();
+
+///////////////////////////////// Treatments
+
+hospital.getAllTreatByBoth =(request) => {
+  const { pat_id, doc_id } = request.payload;
+  return db.getAllTreatByBoth(pat_id, doc_id);
+}
+
+hospital.getAllTreatByDoc =(request) => {
+  const { id } = request.payload;
+  return db.getAllTreatByDoc(id);
+}
+
+hospital.getAllTreatByPat =(request) => {
+  const { id } = request.payload;
+  return db.getAllTreatByPat(id);
+}
+
+////////////////////////////////
 
 todo.update = (request) => {
   const { id, value } = request.payload;
-  arrayOfTodo[id] = value;
-  return 'updated';
+  return db.update(id, value);
 };
 
 todo.delete = (request) => {
   const { id } = request.payload;
-  delete arrayOfTodo[id];
-  arrayOfTodo.splice(id, 1);
-  return 'deleted';
+  return db.delete(id);
 };

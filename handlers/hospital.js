@@ -58,6 +58,11 @@ hospital.getAllTreatByPat =(request) => {
   return db.getAllTreatByPat(id);
 }
 
+hospital.updateDoc = (request) => {
+  const { id } = request.params;
+  return db.updateDoc(id, request.payload);
+};
+
 ////////////////////////////////
 
 // todo.update = (request) => {

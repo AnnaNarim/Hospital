@@ -137,6 +137,16 @@ routes.push({
   },
 });
 
+routes.push({
+  method: 'PUT',
+  path: '/api/doctors/{id}',
+  handler: Handlers.updateDoc,
+  config: {
+    tags: ['api'],
+    description: 'update Doctor by given index',
+  },
+});
+
 
 
 ////////////////////////////////////////

@@ -77,3 +77,14 @@ create index doctor_index on doctor(doct_id);
 also for nurses and patients
 
 
+
+
+ ALTER TABLE head_doctors
+ DROP CONSTRAINT doctor_dep_id_fkey,
+	ADD CONSTRAINT doctor_dep_id_fkey FOREIGN KEY (dep_id) REFERENCES department(dep_id)
+          ON UPDATE CASCADE ON DELETE RESTRICT;
+          ALTER TABLE doctor drop constraint doctor_dep_id_fkey, ADD CONSTRAINT doctor_dep_id_fkey FOREIGN KEY (dep_id) REFERENCES department(dep_id);
+
+
+
+

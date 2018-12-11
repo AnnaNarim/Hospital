@@ -8,31 +8,30 @@
     <fieldset>
       <p>Choose field to add:</p>
       <form action="" method="post">
-      <input type = "radio"
+      <input type="radio" name="input"
         id = "chkDoctors"
-        value = "doctors" checked>Doctors
-      <input type = "radio"
+        value = "doctors" >Doctors
+      <input type = "radio" name="input"
         id = "chkNurses"
         value = "nurses">Nurses
-      <input type = "radio"
+      <input type = "radio" name="input"
         id = "chkDepts"
         value = "departments">Departments
-      <input type = "radio"
+      <input type = "radio" name="input"
         id = "chkPatients"
         value = "patients">Patients 
         <p></p>
       <nav>
       <a href="adding">next</a> 
       </nav>
-      </fieldset>
       </form>
-
+    </fieldset>
       <p></p>
       <nav>
       <a href="treatment">Treatment</a> 
       </nav>
       <p></p>
-    <fieldset>
+<fieldset>
       <table rules="all">
         <th>
           <div style="float: left; margin-right: 10px">
@@ -127,9 +126,9 @@
             .then((response)=> response.json())
             .then(() => {
               alert('Doctor deleted!');
-              document.getElementById('DocInput').value = '';
-              document.getElementById('rootDoc').value = '';
-              document.getElementById('countMax').value = '';
+              document.getElementById('DocInput').innerHTML = '';
+              document.getElementById('rootDoc').innerHTML = '';
+              document.getElementById('countMax').innerHTML = '';
             })
             .catch(console.error);
         }
@@ -141,6 +140,8 @@
           .then((response)=> response.json())
           .then(data => {
             const rootDoc = document.getElementById('rootDoc');
+            const countMax = document.getElementById('countMax');
+            countMax.innerHTML = '';
             rootDoc.innerHTML = docInputs(data);
           })
         }
@@ -148,7 +149,6 @@
         const docInputs = (data) => {
           if(data) {
             return `
-
               ID: <br>
               <input type='number' id='doc_id' value=${data[0].doct_id} disabled>
               <p><p>
@@ -189,6 +189,40 @@
           }
         }
 
+        const update = () => {
+          const id = document.getElementById('doc_id').value;
+          const firstname = document.getElementById('firstname').value;
+          const lastname = document.getElementById('lastname').value;
+          const salary = document.getElementById('salary').value;
+          const birth = document.getElementById('birthDate').value;
+          const address = document.getElementById('address').value;
+          const dep_id = document.getElementById('deptID').value;
+          const room = document.getElementById('room').value;
+
+          fetch(API_URL+'doctors/' + id, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              first_name: firstname,
+              last_name: lastname,
+              salary: salary,
+              birth: birth,
+              address: address,
+              dep_id: dep_id,
+              room: room
+            }),
+          })
+          .then(response => console.log(response))
+          .then( () => {
+            alert('Doctor Updated');
+            const rootDoc = document.getElementById('rootDoc');
+            const countMax = document.getElementById('countMax');
+            rootDoc.innerHTML ='';
+            countMax.innerHTML = '';
+          })
+        }
         const chooseAllDocs = () => {
           fetch(API_URL+'doctors')
           .then((response)=> response.json())

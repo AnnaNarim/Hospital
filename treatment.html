@@ -61,17 +61,13 @@
           return fetch(API_URL+'treatments/'+idPat+'/'+idDoc)
                 .then((response)=> response.json())
                 .then(data => {
-                                    console.log('---dataan both', data.rows)
-
-                  root.innerHTML = makeListTreat(data.rows);    // ????????
+                  root.innerHTML = makeListTreat(data.rows);
                 })
        }
 
       }
-/// ??? nuyn anunov columneri hamar inch piti arvni
-// eta mnacel u update
       const makeListTreat = (data) => {
-         if(data) {
+         if(data.length) {
           return `
             <ul>
                 ${data.map((item) =>
@@ -104,10 +100,11 @@
             </ul>
           `
         }
+        else return `<p> No Record </p>`
       }
 
       const makeListTreatDoc = (data) => {
-        if(data) {
+        if(data.length) {
           return `
             <ul>
                 ${data.map((item) =>
@@ -136,10 +133,11 @@
             </ul>
           `
         }
+        else return `<p> No Record </p>`
       }
 
       const makeListTreatPat = (data) => {
-        if(data) {
+        if(data.length) {
           return `
             <ul>
                 ${data.map((item) =>
@@ -164,6 +162,7 @@
             </ul>
           `
         }
+        else return `<p> No Record </p>`
       }
   </script>
 

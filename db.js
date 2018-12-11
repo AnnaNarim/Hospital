@@ -123,9 +123,18 @@ Database.deleteDoc = (id) => {
 
 ///////////////////// UPDATE ??????????
 
-Database.updateDoc = (id, name, value) => {
+Database.updateDoc = (id, payload) => {
   return new Promise((resolve, reject) => {
-    client.query(`update doctor set todo='${value}' where id=${id}`, (err, res) => {
+    client.query(`update doctor
+      set first_name='${payload.first_name}',
+        last_name='${payload.last_name}',
+        address='${payload.address}',
+        birth='${payload.birth}',
+        room=${payload.room},
+        salary=${payload.salary},
+        dep_id=${payload.dep_id}
+      where doct_id=${id}`, 
+      (err, res) => {
       if (err) return reject(err);
       return resolve(res);
     })
@@ -160,17 +169,10 @@ Database.getAllTreatByPat = (id) => {
 Database.getAllTreatByBoth = (pat_id, doc_id) => {
   return new Promise((resolve, reject) => {
     client.query(`
-      (select * from doctor, (select * 
-        from treatment
-        where treatment.pat_id = ${pat_id}
-          and treatment.doct_id = ${doc_id}) t1
-      where doctor.doct_id = t1.doct_id)
-      union 
-      (select * from patient, (select * 
-        from treatment
-        where treatment.pat_id = ${pat_id}
-          and treatment.doct_id = ${doc_id}) t1
-      where patient.pat_id = t1.pat_id)
+      select * 
+      from patient, (
+        select * from doctor, treatment where treatment.doct_id = ${doc_id} and  doctor.doct_id = treatment.doct_id) t
+      where patient.pat_id = t.pat_id and patient.pat_id = ${pat_id};
       `,
       (err, res) => {
       if (err) return reject(err);
@@ -193,3 +195,22 @@ module.exports = Database;
 //         where treatment.pat_id = 1
 //           and treatment.doct_id = 4) t1
 //       where patient.pat_id = t1.pat_id)
+
+
+
+//       select * 
+//       from patient, (
+//         select * from doctor, treatment where treatment.doct_id = 4 and  doctor.doct_id = treatment.doct_id) t
+//       where patient.pat_id = t.pat_id and patient.pat_id = 1;
+
+
+
+// update doctor
+//       set first_name='Tommo',
+//         last_name='',
+//         address='',
+//         birth='1985-04-04',
+//         room=0,
+//         salary=0,
+//         dep_id=1
+//       where doct_id=1;

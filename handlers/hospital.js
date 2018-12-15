@@ -33,10 +33,14 @@ hospital.deleteDoctor = (request) => {
   return db.deleteDoc(id);
 }
 
+hospital.updateDoc = (request) => {
+  const { id } = request.params;
+  return db.updateDoc(id, request.payload);
+};
+
 ///////////////////////////////// departments
 
 hospital.getAllDepart = () => {
-  console.log('---ekav hasav')
   return db.getAllDepart();
 } 
 
@@ -57,20 +61,3 @@ hospital.getAllTreatByPat =(request) => {
   const { id } = request.params;
   return db.getAllTreatByPat(id);
 }
-
-hospital.updateDoc = (request) => {
-  const { id } = request.params;
-  return db.updateDoc(id, request.payload);
-};
-
-////////////////////////////////
-
-// todo.update = (request) => {
-//   const { id, value } = request.payload;
-//   return db.update(id, value);
-// };
-
-// todo.delete = (request) => {
-//   const { id } = request.payload;
-//   return db.delete(id);
-// };

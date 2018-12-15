@@ -182,35 +182,3 @@ Database.getAllTreatByBoth = (pat_id, doc_id) => {
 };
 
 module.exports = Database;
-
-
-// (select * from doctor, (select * 
-//         from treatment
-//         where treatment.pat_id = 1
-//           and treatment.doct_id = 4) t1
-//       where doctor.doct_id = t1.doct_id)
-//       union 
-//       (select * from patient, (select * 
-//         from treatment
-//         where treatment.pat_id = 1
-//           and treatment.doct_id = 4) t1
-//       where patient.pat_id = t1.pat_id)
-
-
-
-//       select * 
-//       from patient, (
-//         select * from doctor, treatment where treatment.doct_id = 4 and  doctor.doct_id = treatment.doct_id) t
-//       where patient.pat_id = t.pat_id and patient.pat_id = 1;
-
-
-
-// update doctor
-//       set first_name='Tommo',
-//         last_name='',
-//         address='',
-//         birth='1985-04-04',
-//         room=0,
-//         salary=0,
-//         dep_id=1
-//       where doct_id=1;

@@ -9,7 +9,7 @@ routes.push({
   handler: Handlers.renderPage,
   config: {
     tags: ['api'],
-    description: 'Page to render form.html',
+    description: 'Render index.html',
   },
 });
 
@@ -19,7 +19,7 @@ routes.push({
   handler: Handlers.renderPageAdd,
   config: {
     tags: ['api'],
-    description: 'Page to render form.html',
+    description: 'Render adding.html',
   },
 });
 
@@ -29,7 +29,7 @@ routes.push({
   handler: Handlers.renderPageTreat,
   config: {
     tags: ['api'],
-    description: 'Page to render form.html',
+    description: 'Render treatment.html',
   },
 });
 
@@ -93,6 +93,17 @@ routes.push({
     description: 'delete doc by id',
   },
 });
+
+routes.push({
+  method: 'PUT',
+  path: '/api/doctors/{id}',
+  handler: Handlers.updateDoc,
+  config: {
+    tags: ['api'],
+    description: 'update Doctor by given index',
+  },
+});
+
 //////////////////////////////////// department
 
 routes.push({
@@ -113,7 +124,7 @@ routes.push({
   handler: Handlers.getAllTreatByBoth,
   config: {
     tags: ['api'],
-    description: 'to get all departments',
+    description: 'to get treatments by patient and doc',
   },
 });
 
@@ -123,7 +134,7 @@ routes.push({
   handler: Handlers.getAllTreatByDoc,
   config: {
     tags: ['api'],
-    description: 'to get all departments',
+    description: 'to get treatment by doc_id',
   },
 });
 
@@ -133,59 +144,6 @@ routes.push({
   handler: Handlers.getAllTreatByPat,
   config: {
     tags: ['api'],
-    description: 'to get all departments',
+    description: 'to get treatments by patient id',
   },
 });
-
-routes.push({
-  method: 'PUT',
-  path: '/api/doctors/{id}',
-  handler: Handlers.updateDoc,
-  config: {
-    tags: ['api'],
-    description: 'update Doctor by given index',
-  },
-});
-
-
-
-////////////////////////////////////////
-// routes.push({
-//   method: 'POST',
-//   path: '/api/todos',
-//   handler: Handlers.add,
-//   config: {
-//     tags: ['api'],
-//     description: 'to add todo',
-//   },
-// });
-
-// routes.push({
-//   method: 'GET',
-//   path: '/api/todos',
-//   handler: Handlers.getTodos,
-//   config: {
-//     tags: ['api'],
-//     description: 'to get all todos',
-//   },
-// });
-
-// routes.push({
-//   method: 'PUT',
-//   path: '/api/todos/{id}',
-//   handler: Handlers.update,
-//   config: {
-//     tags: ['api'],
-//     description: 'update todo at given index',
-//   },
-// });
-
-// routes.push({
-//   method: 'DELETE',
-//   path: '/api/todos/{id}',
-//   handler: Handlers.delete,
-//   config: {
-//     tags: ['api'],
-//     description: 'delete todo at given index (change active to 0)',
-//   },
-// });
